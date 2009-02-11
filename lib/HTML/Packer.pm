@@ -7,7 +7,7 @@ use Carp;
 
 use vars qw/$VERSION $PLACEHOLDER/;
 
-$VERSION = '0.2';
+$VERSION = '0.3';
 
 $PLACEHOLDER = 'hp_';
 
@@ -143,11 +143,11 @@ __END__
 
 =head1 NAME
 
-HTML::Packer - Another CSS minifier
+HTML::Packer - AAnother HTML code cleaner
 
 =head1 VERSION
 
-Version 0.2
+Version 0.3
 
 =head1 SYNOPSIS
 
@@ -180,13 +180,13 @@ ALL newlines will be removed if 'remove_newlines' has a true value.
 
 Defines compression level for javascript. Possible values are 'minify', 'shrink' and 'base62'.
 Default is no compression for javascript.
-This option only takes affect if L<JavaScript::Packer> is installed.
+This option only takes effect if L<JavaScript::Packer> is installed.
 
 =item do_stylesheet
 
 Defines compression level for CSS. Possible values are 'minify' and 'pretty'.
 Default is no compression for CSS.
-This option only takes affect if L<CSS::Packer> is installed.
+This option only takes effect if L<CSS::Packer> is installed.
 
 =back
 
@@ -208,7 +208,7 @@ perldoc HTML::Packer
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Merten Falk, all rights reserved.
+Copyright 2009 Merten Falk, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
