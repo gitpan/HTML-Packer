@@ -7,7 +7,7 @@ use Carp;
 
 use vars qw/$VERSION $PLACEHOLDER/;
 
-$VERSION = '0.3';
+$VERSION = '0.4';
 
 $PLACEHOLDER = 'hp_';
 
@@ -143,11 +143,11 @@ __END__
 
 =head1 NAME
 
-HTML::Packer - AAnother HTML code cleaner
+HTML::Packer - Another HTML code cleaner
 
 =head1 VERSION
 
-Version 0.3
+Version 0.4
 
 =head1 SYNOPSIS
 

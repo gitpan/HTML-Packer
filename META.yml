@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                HTML-Packer
-version:             0.3
-abstract:            AAnother HTML code cleaner
+version:             0.4
+abstract:            Another HTML code cleaner
 license:             perl
 author:              
     - Merten Falk <nevesenin@cpan.org>
