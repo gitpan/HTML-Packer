@@ -51,16 +51,16 @@ my $css_input = <<EOT;
 EOT
 
 my $js_expected_comp    = '<script type="javascript">/*<![CDATA[*/alert(\'test\');/*]]>*/</script><a href="/">link 1 </a> <a href="/"> link 2 </a>';
-my $js_expected_nocdata = '<script type="javascript">alert(\'test\');</script><a href="/">link 1 </a> <a href="/"> link 2 </a>';
+my $js_expected_html5   = '<script>alert(\'test\');</script><a href="/">link 1 </a> <a href="/"> link 2 </a>';
 my $js_expected_nocomp  = '<script type="javascript">' . "\n\n\n\n" . '  alert(\'test\');</script><a href="/">link 1 </a> <a href="/"> link 2 </a>';
 
 my $css_expected_comp   = '<style type="text/css">' . "\nfoo{\nasdf:asdf;\new:12;\n}\n" . '</style><a href="/">link 1 </a> <a href="/"> link 2 </a>';
 my $css_expected_nocomp = '<style type="text/css">' . "\n\n  foo {\n    asdf:asdf;\n    ew:12;\n  }\n" . '</style><a href="/">link 1 </a> <a href="/"> link 2 </a>';
 
-my $not = 9;
+my $not = 10;
 
 SKIP: {
-    eval( 'use HTML::Packer;' );
+    eval { use HTML::Packer; };
 
     skip( 'HTML::Packer not installed!', $not ) if ( $@ );
 
@@ -72,28 +72,29 @@ SKIP: {
     minTest( 's4', { remove_comments => 1, remove_newlines => 1 }, 'Test remove_newlines and remove_comments.' );
     minTest( 's5', { remove_comments => 1, remove_newlines => 1 }, 'Test _no_compress_ comment.' );
     minTest( 's6', { remove_comments => 1, remove_newlines => 1, no_compress_comment => 1 }, 'Test _no_compress_ comment with no_compress_comment option.' );
+    minTest( 's7', { remove_comments => 1, remove_newlines => 1, html5 => 1, do_javascript => 'minify' }, 'Test html5 option.' );
 
     my $packer = HTML::Packer->init();
     my $js_comp_input   = $js_input;
-    my $js_cdata_input  = $js_input;
+    my $js_html5_input  = $js_input;
     $packer->minify( \$js_comp_input, { remove_comments => 1, remove_newlines => 1, do_javascript => 'minify' } );
-    $packer->minify( \$js_cdata_input, { remove_comments => 1, remove_newlines => 1, do_javascript => 'minify', no_cdata => 1 } );
+    $packer->minify( \$js_html5_input, { remove_comments => 1, remove_newlines => 1, do_javascript => 'minify', html5 => 1 } );
 
-    eval( 'require JavaScript::Packer' );
+    eval "use JavaScript::Packer $HTML::Packer::REQUIRED_JAVASCRIPT_PACKER;";
     if ( $@ ) {
-        is( $js_comp_input, $js_expected_nocomp, 'Test do_javascript. JavaScript::Packer not installed.' );
-        is( $js_cdata_input, $js_expected_nocomp, 'Test do_javascript 2. JavaScript::Packer not installed.' );
+        is( $js_comp_input, $js_expected_nocomp, 'Test do_javascript. JavaScript::Packer >= ' . $HTML::Packer::REQUIRED_JAVASCRIPT_PACKER . ' not installed.' );
+        is( $js_html5_input, $js_expected_nocomp, 'Test do_javascript 2. JavaScript::Packer >= ' . $HTML::Packer::REQUIRED_JAVASCRIPT_PACKER . ' not installed.' );
     }
     else {
         is( $js_comp_input, $js_expected_comp, 'Test do_javascript. JavaScript::Packer installed.' );
-        is( $js_cdata_input, $js_expected_nocdata, 'Test do_javascript 2. JavaScript::Packer installed.' );
+        is( $js_html5_input, $js_expected_html5, 'Test do_javascript 2. JavaScript::Packer installed.' );
     }
 
     $packer->minify( \$css_input, { remove_comments => 1, remove_newlines => 1, do_stylesheet => 'pretty' } );
 
-    eval( 'require CSS::Packer' );
+    eval "use CSS::Packer $HTML::Packer::REQUIRED_CSS_PACKER;";
     if ( $@ ) {
-        is( $css_input, $css_expected_nocomp, 'Test do_stylesheet. CSS::Packer not installed.' );
+        is( $css_input, $css_expected_nocomp, 'Test do_stylesheet. CSS::Packer >= ' . $HTML::Packer::REQUIRED_CSS_PACKER . ' not installed.' );
     }
     else {
         is( $css_input, $css_expected_comp, 'Test do_stylesheet. CSS::Packer installed.' );
