@@ -26,4 +26,4 @@ resources:
   bugtracker: http://github.com/nevesenin/html-packer-perl/issues
   license: http://dev.perl.org/licenses/
   repository: http://github.com/nevesenin/html-packer-perl
-version: 1.002001
+version: 1.003_001
